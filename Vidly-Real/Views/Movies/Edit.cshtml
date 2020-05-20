@@ -1,0 +1,68 @@
+﻿@model Vidly_Real.Models.Movie
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (Model.Id == 0)
+{
+    <h2>Add Movie</h2>
+    using (Html.BeginForm("Add", "Movies"))
+    {
+        @Html.ValidationSummary(true, "Please fix following errors.")
+        @Html.HiddenFor(m => m.Id)
+        <div class="form-group">
+            @Html.LabelFor(m => m.Name)
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Name)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.ReleaseDate)
+            @Html.TextBoxFor(m => m.ReleaseDate, "{0:d MMM yyyy}", new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.ReleaseDate)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Genre)
+            @Html.TextBoxFor(m => m.Genre, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Genre)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.NumberInStock)
+            @Html.TextBoxFor(m => m.NumberInStock, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.NumberInStock)
+
+        </div>
+        @Html.HiddenFor(m => m.Id)
+        @Html.AntiForgeryToken()
+        <button type="submit" class="btn btn-primary">Save</button>
+    }
+}
+else
+{
+    <h2>Edit Movie</h2>
+    using (Html.BeginForm("Edit", "Movies"))
+    {
+        @Html.ValidationSummary(true, "Please fix following errors.")
+        @Html.HiddenFor(m => m.Id)
+        <div class="form-group">
+            @Html.LabelFor(m => m.Name)
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Name)
+            @Html.LabelFor(m => m.ReleaseDate)
+            @Html.TextBoxFor(m => m.ReleaseDate, "{0:d MMM yyyy}", new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.ReleaseDate)
+            @Html.LabelFor(m => m.Genre)
+            @Html.TextBoxFor(m => m.Genre, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Genre)
+            @Html.LabelFor(m => m.NumberInStock)
+            @Html.TextBoxFor(m => m.NumberInStock, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.NumberInStock)
+        </div>
+        @Html.HiddenFor(m => m.Id)
+        @Html.AntiForgeryToken()
+        <button type="submit" class="btn btn-primary">Save</button>
+    }
+}
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+}
