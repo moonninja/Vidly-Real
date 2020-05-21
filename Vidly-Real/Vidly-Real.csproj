@@ -186,7 +186,9 @@
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MoviesAPIController.cs" />
     <Compile Include="Data Transfer Objects\CustomerDTO.cs" />
+    <Compile Include="Data Transfer Objects\MovieDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

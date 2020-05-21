@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace Vidly_Real.Models
+namespace Vidly_Real.Data_Transfer_Objects
 {
-    public class Movie
+    public class MovieDTO
     {
         public int Id { get; set; }
         [Required]
@@ -19,9 +19,8 @@ namespace Vidly_Real.Models
         public DateTime DateAdded { get; set; }
         [Required]
         [Display(Name = "Numbers in Stock")]
-        [Range(1,2)]
+        [Range(1, 20)]
 
         public int NumberInStock { get; set; }
-
     }
 }
