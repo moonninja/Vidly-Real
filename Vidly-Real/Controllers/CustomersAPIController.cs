@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Data.Entity;
 using System.Net.Http;
 using System.Web.Http;
 using Vidly_Real.Data_Transfer_Objects;
@@ -25,7 +26,7 @@ namespace Vidly_Real.Controllers
         [HttpGet]
         public IEnumerable<CustomerDTO> GetCustomers()
         {
-            return _context.Customers.ToList().Select(Mapper.Map<Customer,CustomerDTO>);
+            return _context.Customers.Include(c => c.MembershipType).ToList().Select(Mapper.Map<Customer,CustomerDTO>);
         }
         //GET /api/customersAPI/1
         [HttpGet]

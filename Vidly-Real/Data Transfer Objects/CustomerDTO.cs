@@ -14,6 +14,7 @@ namespace Vidly_Real.Data_Transfer_Objects
         [StringLength(255)]
         public string Name { get; set; }
         public bool IsSubscirbedToNewsLetter { get; set; }
+        public MembershipTypeDTO MembershipType { get; set; }
         public byte MembershipTypeId { get; set; }
         //[Min18YearsIfAMember]
         public DateTime? BirthDate { get; set; }

@@ -21,7 +21,7 @@ namespace Vidly_Real.Controllers
         {
             _context.Dispose();
         }
-        // GET: api/MoviesAPI
+        // GET: /api/MoviesAPI
         [HttpGet]
         public IEnumerable<Movie> GetMovie()
         {

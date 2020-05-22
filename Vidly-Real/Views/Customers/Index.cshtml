@@ -6,25 +6,78 @@
 }
 
 <h2>Customers</h2>
-@if (Model.Count() == 0)
-{
-    <span>We do not have any customers yet.</span>
-}
-else
-{
-    <table class="table">
+
+<table id="t_customers" class="table table-bordered table-hover">
+    <thead>
         <tr>
             <th>Name</th>
             <th>MembershipType</th>
+            <th>Delete</th>
         </tr>
+    </thead>
+    <tbody>
+        @*@foreach (var customer in Model)
+            {
+                <tr>
+                    <td>@Html.ActionLink(customer.Name, "Details", "Customers", new { Id = customer.Id }, new { @class = "nav-link" })</td>
+                    <td>@customer.MembershipType.Name</td>
+                    <td>
+                        <button data-customer-id="@customer.Id" data-customer-name="@customer.Name" type="button" class="btn-link js-delete">Delete</button>
+                    </td>
+                </tr>
+            }*@
 
-        @foreach (var customer in Model)
-        {
-            <tr>
-                <td>@Html.ActionLink(customer.Name, "Details", "Customers", new { Id = customer.Id }, new { @class = "nav-link" })</td>
-                <td>@customer.MembershipType.Name</td>
-            </tr>
-        }
+    </tbody>
+</table>
 
-    </table>
+
+@section scripts
+{
+    <script>
+        $(function () {
+            $("#t_customers").DataTable({
+                ajax: {
+                    url: "/api/customersAPI/",
+                    dataSrc: "",
+                },
+                columns: [
+                    {
+                        data: "name",
+                        render: function (data, type, rowCustomer) {
+                            return "<a href='/customer/edit/" + rowCustomer.id + "'>" + rowCustomer.name + "</a>";
+                        }
+                    },
+                    {
+                        data: "membershipType.name"
+                    },
+                    {
+                        data: "id",
+                        render: function (data, type, rowCustomer) {
+                            console.log(data);
+                            return `<button class='btn-link js-delete' data-customer-id='${rowCustomer.id}' data-customer-name='${rowCustomer.name}'>Delete</button>`;
+                            /*"<button class='btn-link js-delete' data-customer-id='"+data+"'>Delete</button>";*/
+
+                        /*`<button class='btn-link js-delete' data-customer-id='${rowCustomer.id}' data-customer-name='${rowCustomer.name}'>Delete</button>`;*/
+                        }
+                    }
+                ]
+            });
+
+            $("#t_customers").on("click", ".js-delete", function () {
+                let name = $(this).attr("data-customer-name");
+                let id = $(this).attr("data-customer-id");
+                bootbox.confirm(`Are you sure you want to delete the following customer : ${name}`, function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: "/api/customersAPI/" + id,
+                            method: "DELETE",
+                            success: function () {
+                                window.location.reload();
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 }
