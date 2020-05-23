@@ -1,6 +1,4 @@
-﻿@model IEnumerable<Vidly_Real.Models.Movie>
-
-@{
+﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -34,6 +32,7 @@
 @section scripts
 {
     <script>
+        //t_movies datatable
         $(function () {
             $("#t_movies").DataTable({
                 ajax: {

@@ -21,14 +21,16 @@ namespace Vidly_Real.Models
         // GET: Movies
         public ActionResult Index()
         {
-            var movies = _context.Movies.ToList();
-            return View(movies);
+            if(User.IsInRole(RoleName.CanManageMovies))
+                return View("List");
+            return View("ReadOnlyList");
         }
         public ActionResult Details(int? Id)
         {
             var movie = _context.Movies.SingleOrDefault(m => m.Id == Id);
             return View(movie);
         }
+        [Authorize(Roles = RoleName.CanManageMovies)]
         public ActionResult Edit(int? Id)
         {
             Movie movie = new Movie();
