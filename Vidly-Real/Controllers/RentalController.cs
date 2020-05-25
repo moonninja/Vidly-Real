@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace Vidly_Real.Controllers
 {
+    [AllowAnonymous]
     public class RentalController : Controller
     {
         // GET: Rental
