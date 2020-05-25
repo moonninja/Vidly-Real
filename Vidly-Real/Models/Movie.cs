@@ -22,6 +22,7 @@ namespace Vidly_Real.Models
         [Range(1,2)]
 
         public int NumberInStock { get; set; }
+        public int NumberAvailable { get; set; }
 
     }
 }

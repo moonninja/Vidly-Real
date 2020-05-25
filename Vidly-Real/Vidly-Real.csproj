@@ -48,6 +48,9 @@
     <Reference Include="AutoMapper, Version=4.1.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoMapper.4.1.0\lib\net45\AutoMapper.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -169,9 +172,6 @@
     <Reference Include="Microsoft.Owin.Security.OAuth">
       <HintPath>..\packages\Microsoft.Owin.Security.OAuth.4.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
-      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -187,9 +187,12 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MoviesAPIController.cs" />
+    <Compile Include="Controllers\NewRentalAPIController.cs" />
+    <Compile Include="Controllers\RentalController.cs" />
     <Compile Include="Data Transfer Objects\CustomerDTO.cs" />
     <Compile Include="Data Transfer Objects\MembershipTypeDTO.cs" />
     <Compile Include="Data Transfer Objects\MovieDTO.cs" />
+    <Compile Include="Data Transfer Objects\NewRentalDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -253,6 +256,22 @@
     <Compile Include="Migrations\202005231230024_AddDrivingLicenseToApplicationUser.Designer.cs">
       <DependentUpon>202005231230024_AddDrivingLicenseToApplicationUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202005251103127_Rental.cs" />
+    <Compile Include="Migrations\202005251103127_Rental.Designer.cs">
+      <DependentUpon>202005251103127_Rental.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005251105038_Rental1.cs" />
+    <Compile Include="Migrations\202005251105038_Rental1.Designer.cs">
+      <DependentUpon>202005251105038_Rental1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005251105499_Rental11.cs" />
+    <Compile Include="Migrations\202005251105499_Rental11.Designer.cs">
+      <DependentUpon>202005251105499_Rental11.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005251121334_AddedNumberAvailablityToMovie.cs" />
+    <Compile Include="Migrations\202005251121334_AddedNumberAvailablityToMovie.Designer.cs">
+      <DependentUpon>202005251121334_AddedNumberAvailablityToMovie.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -262,6 +281,7 @@
     <Compile Include="Models\Min18YearsIfAMember.cs" />
     <Compile Include="Models\Movie.cs" />
     <Compile Include="Models\MoviesController.cs" />
+    <Compile Include="Models\Rental.cs" />
     <Compile Include="Models\RoleName.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -379,10 +399,13 @@
     <Content Include="Content\DataTables\images\sort_desc.png" />
     <Content Include="Content\DataTables\images\sort_desc_disabled.png" />
     <Content Include="Content\DataTables\swf\flashExport.swf" />
+    <Content Include="Content\Typeahead.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\bloodhound.js" />
+    <Content Include="Scripts\bloodhound.min.js" />
     <Content Include="Scripts\bootbox.js" />
     <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -464,6 +487,10 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\typeahead.bundle.js" />
+    <Content Include="Scripts\typeahead.bundle.min.js" />
+    <Content Include="Scripts\typeahead.jquery.js" />
+    <Content Include="Scripts\typeahead.jquery.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -505,6 +532,7 @@
     <Content Include="Views\Movies\Edit.cshtml" />
     <Content Include="Views\Customers\CustomerForm.cshtml" />
     <Content Include="Views\Movies\ReadOnlyList.cshtml" />
+    <Content Include="Views\Rental\New.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -567,6 +595,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005231230024_AddDrivingLicenseToApplicationUser.resx">
       <DependentUpon>202005231230024_AddDrivingLicenseToApplicationUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005251103127_Rental.resx">
+      <DependentUpon>202005251103127_Rental.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005251105038_Rental1.resx">
+      <DependentUpon>202005251105038_Rental1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005251105499_Rental11.resx">
+      <DependentUpon>202005251105499_Rental11.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005251121334_AddedNumberAvailablityToMovie.resx">
+      <DependentUpon>202005251121334_AddedNumberAvailablityToMovie.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
