@@ -24,9 +24,15 @@ namespace Vidly_Real.Controllers
         }
         //GET /api/customersAPI
         [HttpGet]
-        public IEnumerable<CustomerDTO> GetCustomers()
+        public IHttpActionResult GetCustomers(string query = null)
         {
-            return _context.Customers.Include(c => c.MembershipType).ToList().Select(Mapper.Map<Customer,CustomerDTO>);
+            //return _context.Customers.Include(c => c.MembershipType).ToList().Select(Mapper.Map<Customer,CustomerDTO>);
+            var customersQuery = _context.Customers.Include(c => c.MembershipType);
+
+              if(!String.IsNullOrWhiteSpace(query))
+                customersQuery = customersQuery.Where(c => c.Name.Contains(query));
+              var customersDTOS = customersQuery.ToList().Select(Mapper.Map<Customer,CustomerDTO>);
+            return Ok(customersDTOS);
         }
         //GET /api/customersAPI/1
         [HttpGet]
